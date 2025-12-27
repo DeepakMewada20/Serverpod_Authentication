@@ -59,7 +59,7 @@ void _sendPasswordResetCode(
   required String email,
   required UuidValue passwordResetRequestId,
   required String verificationCode,
-  required Transaction? transaction,
+  required Transaction? transaction,q
 }) {
   // NOTE: Here you call your mail service to send the verification code to
   // the user. For testing, we will just log the verification code.

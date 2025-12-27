@@ -15,10 +15,12 @@ import '../endpoints/artical_endpoint.dart' as _i2;
 import '../endpoints/email_idp_endpoint.dart' as _i3;
 import '../endpoints/jwt_refresh_endpoint.dart' as _i4;
 import '../greeting_endpoint.dart' as _i5;
-import 'package:serverpod_auth_idp_server/serverpod_auth_idp_server.dart'
+import 'package:my_serverpod_project_server/src/generated/article_class.dart'
     as _i6;
-import 'package:serverpod_auth_core_server/serverpod_auth_core_server.dart'
+import 'package:serverpod_auth_idp_server/serverpod_auth_idp_server.dart'
     as _i7;
+import 'package:serverpod_auth_core_server/serverpod_auth_core_server.dart'
+    as _i8;
 
 class Endpoints extends _i1.EndpointDispatch {
   @override
@@ -55,13 +57,59 @@ class Endpoints extends _i1.EndpointDispatch {
       methodConnectors: {
         'getArtical': _i1.MethodConnector(
           name: 'getArtical',
-          params: {},
+          params: {
+            'keyword': _i1.ParameterDescription(
+              name: 'keyword',
+              type: _i1.getType<String?>(),
+              nullable: true,
+            ),
+          },
           call:
               (
                 _i1.Session session,
                 Map<String, dynamic> params,
-              ) async => (endpoints['artical'] as _i2.ArticalEndpoint)
-                  .getArtical(session),
+              ) async =>
+                  (endpoints['artical'] as _i2.ArticalEndpoint).getArtical(
+                    session,
+                    keyword: params['keyword'],
+                  ),
+        ),
+        'addArticle': _i1.MethodConnector(
+          name: 'addArticle',
+          params: {
+            'artical': _i1.ParameterDescription(
+              name: 'artical',
+              type: _i1.getType<List<_i6.Article>>(),
+              nullable: false,
+            ),
+          },
+          call:
+              (
+                _i1.Session session,
+                Map<String, dynamic> params,
+              ) async =>
+                  (endpoints['artical'] as _i2.ArticalEndpoint).addArticle(
+                    session,
+                    params['artical'],
+                  ),
+        ),
+        'upDate': _i1.MethodConnector(
+          name: 'upDate',
+          params: {
+            'article': _i1.ParameterDescription(
+              name: 'article',
+              type: _i1.getType<List<_i6.Article>>(),
+              nullable: false,
+            ),
+          },
+          call:
+              (
+                _i1.Session session,
+                Map<String, dynamic> params,
+              ) async => (endpoints['artical'] as _i2.ArticalEndpoint).upDate(
+                session,
+                params['article'],
+              ),
         ),
       },
     );
@@ -283,9 +331,9 @@ class Endpoints extends _i1.EndpointDispatch {
         ),
       },
     );
-    modules['serverpod_auth_idp'] = _i6.Endpoints()
+    modules['serverpod_auth_idp'] = _i7.Endpoints()
       ..initializeEndpoints(server);
-    modules['serverpod_auth_core'] = _i7.Endpoints()
+    modules['serverpod_auth_core'] = _i8.Endpoints()
       ..initializeEndpoints(server);
   }
 }

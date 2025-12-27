@@ -1,5 +1,7 @@
 artical:
   - getArtical:
+  - addArticle:
+  - upDate:
 emailIdp:
   - login:
   - startRegistration:
